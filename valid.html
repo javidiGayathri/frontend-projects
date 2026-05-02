@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html ng-app="simpleFormApp">
+<head>
+    <title> AngularJS Form</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: #007bff;
+            margin: 10px auto 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
+            outline: none;
+        }
+
+        .error-message {
+            color: #ff4d4d;
+            font-size: 0.9rem;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            animation: shake 0.3s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-4px);
+            }
+            75% {
+                transform: translateX(4px);
+            }
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            font-size: 1rem;
+            padding: 12px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 91, 187, 0.4);
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        
+        input, select {
+            font-family: 'Arial', sans-serif;
+            background: #f9f9f9;
+        }
+
+        select {
+            appearance: none;
+            
+            background-position: right 15px center;
+            background-size: 12px;
+        }
+    </style>
+</head>
+<body ng-controller="SimpleFormController">
+    <div class="form-container">
+        <form name="simpleForm" ng-submit="submitForm(simpleForm)" novalidate>
+            <h2>Registration Form</h2>
+
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" ng-model="user.fullName" required>
+            <div class="error-message" ng-show="simpleForm.fullName.$touched && simpleForm.fullName.$error.required">
+                Full Name is required.
+            </div>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" ng-model="user.email" required>
+            <div class="error-message" ng-show="simpleForm.email.$touched && simpleForm.email.$error.required">
+                Email is required.
+            </div>
+            <div class="error-message" ng-show="simpleForm.email.$touched && simpleForm.email.$error.email">
+                Invalid email format.
+            </div>
+
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" ng-model="user.phone" ng-pattern="/^\d{10}$/" required>
+            <div class="error-message" ng-show="simpleForm.phone.$touched && simpleForm.phone.$error.required">
+                Phone Number is required.
+            </div>
+            <div class="error-message" ng-show="simpleForm.phone.$touched && simpleForm.phone.$error.pattern">
+                Phone Number must be 10 digits.
+            </div>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" ng-model="user.password" ng-minlength="8" required>
+            <div class="error-message" ng-show="simpleForm.password.$touched && simpleForm.password.$error.required">
+                Password is required.
+            </div>
+            <div class="error-message" ng-show="simpleForm.password.$touched && simpleForm.password.$error.minlength">
+                Password must be at least 8 characters.
+            </div>
+
+            <label for="country">Country</label>
+            <select id="country" name="country" ng-model="user.country" required>
+                <option value="" disabled selected>Select Country</option>
+                <option value="India">India</option>
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+            </select>
+            <div class="error-message" ng-show="simpleForm.country.$touched && simpleForm.country.$error.required">
+                Country is required.
+            </div>
+
+            <button type="submit" ng-disabled="simpleForm.$invalid">Submit</button>
+        </form>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script>
+        angular.module('simpleFormApp', [])
+            .controller('SimpleFormController', ['$scope', function($scope) {
+                $scope.user = {};
+
+                $scope.submitForm = function(form) {
+                    if (form.$valid) {
+                       alert('Form submitted successfull');
+                        form.$setPristine();
+                        form.$setUntouched();
+                        $scope.user = {};
+                    } else {
+                        alert('Please fix the errors before submitting.');
+                    }
+                };
+            }]);
+    </script>
+</body>
+</html>
+ 

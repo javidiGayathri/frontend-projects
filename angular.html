@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="bookApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Form with AngularJS</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f0f0f0;
+            padding: 20px;
+        }
+
+        .form-container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #ff4d4d;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background: #d11a1a;
+        }
+    </style>
+</head>
+<body ng-controller="BookController">
+
+    <div class="form-container">
+        <h2>Book Entry Form</h2>
+        <form name="bookForm" ng-submit="addBook(bookForm)" novalidate>
+            <label for="title">Book Title</label>
+            <input type="text" id="title" name="title" ng-model="newBook.title" required>
+            <div class="error-message" ng-show="bookForm.title.$touched && bookForm.title.$error.required">
+                Title is required.
+            </div>
+
+            <label for="author">Author</label>
+            <input type="text" id="author" name="author" ng-model="newBook.author" required>
+            <div class="error-message" ng-show="bookForm.author.$touched && bookForm.author.$error.required">
+                Author is required.
+            </div>
+
+            <label for="genre">Genre</label>
+            <select id="genre" name="genre" ng-model="newBook.genre" required>
+                <option value="" disabled selected>Select Genre</option>
+                <option value="Fiction">Fiction</option>
+                <option value="Non-Fiction">Non-Fiction</option>
+                <option value="Science">Science</option>
+                <option value="History">History</option>
+            </select>
+            <div class="error-message" ng-show="bookForm.genre.$touched && bookForm.genre.$error.required">
+                Genre is required.
+            </div>
+
+            <label for="price">Price</label>
+            <input type="number" id="price" name="price" ng-model="newBook.price" min="1" required>
+            <div class="error-message" ng-show="bookForm.price.$touched && bookForm.price.$error.required">
+                Price is required.
+            </div>
+
+            <button type="submit" ng-disabled="bookForm.$invalid">Add Book</button>
+        </form>
+    </div>
+
+    <div class="table-container">
+        <h2>Book List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Genre</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="book in books">
+                    <td>{{$index + 1}}</td>
+                    <td>{{book.title}}</td>
+                    <td>{{book.author}}</td>
+                    <td>{{book.genre}}</td>
+                    <td>${{book.price}}</td>
+                    <td><button class="delete-btn" ng-click="removeBook($index)">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script>
+        angular.module('bookApp', [])
+            .controller('BookController', ['$scope', function($scope) {
+                $scope.books = [];
+                $scope.newBook =[];
+                $scope.addBook = function(form) {
+                    if (form.$valid) {
+                        $scope.books.push(angular.copy($scope.newBook));
+                        $scope.newBook = {}; 
+                        form.$setPristine();
+                        form.$setUntouched();
+                    }
+                };
+
+            
+                $scope.removeBook = function(index) {
+                    $scope.books.splice(index, 1);
+                };
+            }]);
+    </script>
+
+</body>
+</html>

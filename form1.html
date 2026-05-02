@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: lightcoral;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-weight: bold;
+            font-size: 50px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: gray;
+            padding: 10px;
+            font-size: 20px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 4px rgba(0, 123, 255, 0.2);
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .view_btn {
+            text-align: center;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $("#registrationform").submit(function(event) {
+                // Prevent form submission
+                event.preventDefault();
+
+                var isValid = true;
+                var email = $("#email").val();
+                var password = $("#password").val();
+                var confirmpassword = $("#confirmpassword").val();
+
+                // Email validation
+                if (!email.includes("0") || !email.includes(".")) {
+                    alert("Invalid email address.");
+                    isValid = false;
+                }
+
+                // Password length validation
+                if (password.length < 8) {
+                    alert("Password must be at least 8 characters long.");
+                    isValid = false;
+                }
+
+                // Password match validation
+                if (password !== confirmpassword) {
+                    alert("Passwords do not match.");
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    // If all validations pass, submit the form
+                    alert("Form submitted successfully!");
+                    $("#registrationform")[0].reset();  // Optional: Reset the form after successful submission
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="form-container">
+        <form id="registrationform">
+            <h2>User Registration Form</h2>
+            <label for="firstname">First Name:</label>
+            <input type="text" id="firstname" name="firstname" required><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required title="10 digits only"><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br>
+
+            <label for="confirmpassword">Confirm Password:</label>
+            <input type="password" id="confirmpassword" name="confirmpassword" required><br>
+
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" rows="4" cols="50" required></textarea><br>
+
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required><br>
+
+            <label for="state">State:</label>
+            <input type="text" id="state" name="state" required><br>
+
+            <label for="zipcode">Zipcode:</label>
+            <input type="text" id="zip" name="zip" required><br>
+
+            <label for="country">Country:</label>
+            <select id="country" name="country" required>
+                <option value="">Select Country</option>
+                <option value="India">India</option>
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+            </select><br>
+
+            <div class="view_btn">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

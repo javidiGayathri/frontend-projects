@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<head>
+    
+    <title>Dance Styles</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            text-align: center;
+        }
+        header {
+            background: linear-gradient(45deg, #ff6f61, #de285e);
+            color: white;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        header h1 {
+            margin: 0;
+            animation: fadeIn 1.5s ease;
+            font-weight: bold;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            text-decoration:underline;
+            text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+        }
+        h2{
+          font-size: 30px;
+          font-weight: bold;
+          font-family: Arial, Helvetica, sans-serif;
+        }
+        section {
+            margin: 20px auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            background: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            animation: slideIn 1s ease;
+        }
+        .dance {
+            display: none;
+            margin-top: 10px;
+            text-align: left;
+            color: #555;
+        }
+        button {
+            margin: 10px 0;
+            padding: 10px 20px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #555;
+        }
+
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Explore Dance Styles</h1>
+    </header>
+
+    <section>
+      <div id="img1">
+        <img src="C:\Users\J GAYATHRI\Desktop\static website\ballet1.png"> 
+      </div>
+        <h2>Ballet</h2>
+        <button class="button">Show Details</button>
+        <div class="dance">
+            <p>Ballet is a classical dance form characterized by grace and precision. It originated in the Italian Renaissance courts.</p>
+        </div>
+    </section>
+
+    <section>
+      <div id="img2">
+        <img src="C:\Users\J GAYATHRI\Desktop\static website\hiphop.png">
+      </div>
+        <h2>Hip-Hop</h2>
+        <button class="button">Show Details</button>
+        <div class="dance">
+            <p>Hip-hop dance includes breaking, locking, and popping. It started in the 1970s in the United States as part of hip-hop culture.</p>
+        </div>
+    </section>
+
+    <section>
+      <div id="img3">
+        <img src="C:\Users\J GAYATHRI\Desktop\static website\salsa.png">
+      </div>
+        <h2>Salsa</h2>
+        <button class="button">Show Details</button>
+        <div class="dance">
+            <p>Salsa is a lively and energetic dance that originated in the Caribbean, combining Afro-Cuban and Latin American influences.</p>
+        </div>
+    </section>
+
+    <script>
+        $(document).ready(function() {
+            
+            $('.button').click(function() {
+                const details = $(this).next('.dance');
+                if (details.is(':visible')) {
+                    details.slideUp(300); 
+                    $(this).text('Show Details');
+                } else {
+                    details.slideDown(300); 
+                    $(this).text('Hide Details');
+                }
+            });
+        });
+        $(document).ready(function () {
+            $(".button").click(function () {
+                $("#img1")
+                    .animate({ left: "100px" }, 1000) 
+                    .animate({ opacity: 0.5}, 1000) 
+                    .animate({ width: "300px" }, 1000)
+                    .animate({ opacity: 1 }, 1000); 
+            });
+        });
+        $(document).ready(function () {
+            $(".button").click(function () {
+                $("#img2")
+                  
+                  .animate({ left: "100px" }, 1000) 
+                    .animate({ opacity: 0.5}, 1000) 
+                    .animate({ width: "300px" }, 1000) 
+                    .animate({ opacity: 1 }, 1000); 
+          
+        });
+      });
+    
+        $(document).ready(function () {
+            $(".button").click(function () {
+                $("#img3")
+                    .animate({ left: "100px" }, 1000)
+                    .animate({ opacity: 0.5 }, 1000) 
+                    .animate({ width: "300px" }, 1000) 
+                    .animate({ opacity: 1 }, 1000); 
+            });
+        });
+    </script>
+</body>
+</html>
